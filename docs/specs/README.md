@@ -38,3 +38,20 @@ Each specification should include:
 3. Follow the spec template structure
 4. Reference this README in your spec
 5. Update this README to list your new spec
+
+## Security Considerations in Specifications
+
+### Security Requirements
+When creating specifications, always include:
+- **Input validation**: How inputs are validated and sanitized
+- **Authentication**: Authentication and authorization requirements
+- **Data protection**: How sensitive data is protected
+- **Error handling**: Secure error handling without information leakage
+- **Rate limiting**: Protection against abuse and DoS
+
+### Security Best Practices
+- **No secrets in specs**: Never include API keys, passwords, or credentials
+- **Secure defaults**: Specify secure default configurations
+- **Threat modeling**: Consider security threats and mitigations
+- **Privacy considerations**: Document privacy implications
+- **Compliance**: Note any compliance requirements (GDPR, etc.)

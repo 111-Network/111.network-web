@@ -46,3 +46,17 @@
 - Open an issue for questions or problems
 - Check existing documentation first
 - Review closed issues for similar questions
+
+## Security & Safety Practices
+
+### Code Safety
+- **No secrets in code**: Never commit API keys, tokens, passwords, or credentials
+- **Environment variables**: Use `.env.local` for sensitive data (already in `.gitignore`)
+- **Input validation**: Always validate and sanitize user inputs
+- **Dependency security**: Review dependencies before adding, run `npm audit` regularly
+
+### Contribution Safety
+- **Security review**: All PRs require security-focused code review
+- **Vulnerability reporting**: Report security issues via GitHub Security Advisories (private)
+- **Public code assumption**: Assume all code is public - no hardcoded secrets
+- **Secure defaults**: Use secure configurations and practices by default

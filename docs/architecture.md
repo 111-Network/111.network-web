@@ -78,3 +78,19 @@ As the project evolves, this website will integrate with:
 - Message storage and retrieval via Vercel Postgres
 
 All integration decisions will be documented in Architecture Decision Records (ADRs) in `docs/adr/`.
+
+## Security Architecture
+
+### Security Design Principles
+- **Defense in depth**: Multiple layers of security
+- **Least privilege**: Minimal required permissions
+- **Secure by default**: All configurations secure by default
+- **Input validation**: Validate all inputs at boundaries
+- **No secrets in code**: All secrets via environment variables
+
+### Security Considerations
+- **Authentication**: Secure authentication flows (TBD)
+- **Data protection**: Encrypt sensitive data in transit and at rest
+- **API security**: Rate limiting, input validation, secure headers
+- **Dependency security**: Regular audits, minimal dependencies
+- **Error handling**: Don't expose sensitive information in errors

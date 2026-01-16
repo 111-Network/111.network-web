@@ -22,6 +22,8 @@ Environment variables will be documented here once they are defined. Common vari
 - Database connection strings
 - Authentication secrets
 
+**Security**: Never commit `.env` files. Use `.env.local` for local development (already in `.gitignore`).
+
 ## Development Server
 
 The development server runs on `http://localhost:3000` by default.
@@ -46,3 +48,16 @@ If working with multiple repositories in Cursor:
 ## Troubleshooting
 
 Common issues and solutions will be documented here as they arise.
+
+## Security & Safety
+
+### Environment Security
+- **Never commit secrets**: `.env.local` is gitignored - never commit environment files
+- **Use secure defaults**: All configurations should use secure defaults
+- **Dependency security**: Run `npm audit` regularly, update dependencies promptly
+- **Secrets management**: Use environment variables for all sensitive data
+
+### Development Safety
+- **Public code assumption**: All code is public - no secrets, credentials, or API keys in code
+- **Input validation**: Validate all external inputs and user data
+- **Secure practices**: Follow secure coding practices and review security considerations

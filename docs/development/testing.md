@@ -58,3 +58,18 @@ Test commands will be documented here once testing is set up:
 ## Continuous Integration
 
 CI/CD testing strategy will be defined when CI/CD is set up.
+
+## Security Testing
+
+### Security Testing Guidelines
+- **Dependency scanning**: Run `npm audit` in CI/CD pipeline
+- **Vulnerability testing**: Test for common vulnerabilities (OWASP Top 10)
+- **Input validation testing**: Test all user inputs for injection attacks
+- **Authentication testing**: Test authentication and authorization flows
+- **Secrets scanning**: Use tools to detect accidentally committed secrets
+
+### Security Test Types
+- **Static analysis**: Use ESLint security plugins
+- **Dependency audit**: Regular `npm audit` checks
+- **Input sanitization**: Test all user inputs are properly validated
+- **Authentication flows**: Test secure authentication and session management

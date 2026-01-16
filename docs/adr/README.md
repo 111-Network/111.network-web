@@ -53,3 +53,20 @@ What are the positive and negative consequences of this decision?
 - ADR-0005: Authentication strategy
 - ADR-0006: Database choice
 - ADR-0007: API design approach
+
+## Security Decision Tracking
+
+### Security in ADRs
+When documenting architectural decisions, include:
+- **Security implications**: How the decision affects security
+- **Threat model**: Security threats and mitigations
+- **Compliance**: Any compliance considerations
+- **Risk assessment**: Security risks and trade-offs
+
+### Security-Focused ADRs
+Consider creating ADRs for:
+- Authentication and authorization strategy
+- Data encryption and protection
+- API security design
+- Dependency security policies
+- Vulnerability management process
