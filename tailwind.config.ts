@@ -115,6 +115,7 @@ const config: Config = {
         "fade-in-up": "fade-in-up var(--transition-slow) var(--easing-smooth)",
         "slide-in-right": "slide-in-right var(--transition-base) var(--easing-default)",
         "gradient-shift": "gradient-shift 8s ease infinite",
+        "meteor-fall": "meteor-fall ease-in infinite",
       },
       keyframes: {
         "fade-in": {
@@ -133,6 +134,11 @@ const config: Config = {
           "0%, 100%": { backgroundPosition: "0% 50%" },
           "50%": { backgroundPosition: "100% 50%" },
         },
+        "meteor-fall": {
+          "0%": { opacity: "0", transform: "translateY(0) scaleX(0.4)" },
+          "10%": { opacity: "1" },
+          "100%": { opacity: "0", transform: "translateY(150vh) scaleX(0.4)" },
+        },
       },
       backgroundImage: {
         "gradient-primary": "linear-gradient(135deg, hsl(var(--gradient-start)), hsl(var(--gradient-mid)), hsl(var(--gradient-end)))",
@@ -142,6 +148,7 @@ const config: Config = {
           radial-gradient(at 100% 100%, hsl(var(--primary) / 0.1) 0px, transparent 50%),
           radial-gradient(at 0% 100%, hsl(var(--accent) / 0.1) 0px, transparent 50%)
         `,
+        "gradient-radial": "radial-gradient(circle, var(--tw-gradient-stops))",
       },
       maxWidth: {
         container: "1280px",

@@ -1,122 +1,63 @@
+"use client";
+
 import { Section } from "@/components/section";
 import { Container } from "@/components/container";
 import { Navigation } from "@/components/navigation";
-import { GradientBackground } from "@/components/gradient-background";
+import { Footer } from "@/components/footer";
+import { TypewriterText } from "@/components/typewriter-text";
 import { AnimatedSection } from "@/components/animated-section";
+import { Globe } from "@/components/magicui/globe";
 
 export default function Home() {
+  const typewriterPhrases = [
+    "for Everyone",
+    "Without Borders",
+    "Always Free",
+    "Powered by people",
+  ];
+
   return (
     <>
       <Navigation />
       <main className="relative min-h-screen">
-        <GradientBackground variant="mesh" intensity="light" />
-        
-        <Section fullHeight className="flex items-center justify-center">
-          <Container size="lg" className="relative z-10">
-            <AnimatedSection animation="fade-in-up" delay={100}>
-              <div className="mx-auto max-w-4xl text-center">
-                {/* Logo/Brand */}
-                <div className="mb-8">
-                  <h1 className="font-mono text-6xl font-bold tracking-tight sm:text-7xl md:text-8xl">
-                    <span className="bg-gradient-primary bg-clip-text text-transparent">
-                      111
-                    </span>
-                    <span className="text-foreground"> Network</span>
-                  </h1>
+        <Section fullHeight className="relative flex items-center justify-center">
+          <div className="relative z-10 w-full">
+            <Container size="lg" className="relative">
+              <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+                {/* Left Side: Text Container - Vertically Centered */}
+                <div className="flex-1 flex flex-col justify-center">
+                  <AnimatedSection animation="fade-in-up" delay={100}>
+                    <div className="flex flex-col space-y-6 text-left">
+                      {/* First Line: "one network" */}
+                      <h1 className="text-5xl font-bold tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-8xl">
+                        one network
+                      </h1>
+
+                      {/* Second Line: Typewriter Text */}
+                      <div className="text-5xl font-bold tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-8xl font-mono">
+                        <TypewriterText phrases={typewriterPhrases} />
+                      </div>
+
+                      {/* Third Line: "even without internet" */}
+                      <p className="text-xl font-medium text-muted-foreground sm:text-2xl md:text-3xl">
+                        even without internet
+                      </p>
+                    </div>
+                  </AnimatedSection>
                 </div>
 
-                {/* Tagline */}
-                <AnimatedSection animation="fade-in-up" delay={200}>
-                  <p className="mb-6 text-xl text-muted-foreground sm:text-2xl">
-                    Free, Secure Communication for Everyone
-                  </p>
-                </AnimatedSection>
-
-                {/* Main Message */}
-                <AnimatedSection animation="fade-in-up" delay={300}>
-                  <div className="mb-12 space-y-4">
-                    <h2 className="text-3xl font-semibold sm:text-4xl md:text-5xl">
-                      Coming Soon
-                    </h2>
-                    <p className="mx-auto max-w-2xl text-lg text-muted-foreground sm:text-xl">
-                      A global message network that doesn't rely on companies, governments, or infrastructure.
-                      <br />
-                      <span className="font-medium text-foreground">
-                        It runs on people, not servers.
-                      </span>
-                    </p>
+                {/* Right Side: Globe Container - Fully Contained */}
+                <div className="flex-1 w-full lg:w-auto flex items-center justify-center">
+                  <div className="w-full max-w-full lg:max-w-[500px] flex items-center justify-center overflow-hidden">
+                    <Globe />
                   </div>
-                </AnimatedSection>
-
-                {/* Key Features */}
-                <AnimatedSection animation="fade-in-up" delay={400}>
-                  <div className="mb-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    <div className="rounded-lg border border-border bg-card/50 p-6 backdrop-blur-sm">
-                      <div className="mb-3 text-2xl">🌍</div>
-                      <h3 className="mb-2 font-semibold">Global Reach</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Messages travel across the world map, visible to everyone
-                      </p>
-                    </div>
-                    <div className="rounded-lg border border-border bg-card/50 p-6 backdrop-blur-sm">
-                      <div className="mb-3 text-2xl">🔒</div>
-                      <h3 className="mb-2 font-semibold">Private & Secure</h3>
-                      <p className="text-sm text-muted-foreground">
-                        End-to-end encryption for private conversations
-                      </p>
-                    </div>
-                    <div className="rounded-lg border border-border bg-card/50 p-6 backdrop-blur-sm sm:col-span-2 lg:col-span-1">
-                      <div className="mb-3 text-2xl">📡</div>
-                      <h3 className="mb-2 font-semibold">Works Offline</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Messages hop between devices, even without internet
-                      </p>
-                    </div>
-                  </div>
-                </AnimatedSection>
-
-                {/* CTA */}
-                <AnimatedSection animation="fade-in-up" delay={500}>
-                  <div className="space-y-4">
-                    <p className="text-muted-foreground">
-                      Join us in building a decentralized communication network
-                    </p>
-                    <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-                      <a
-                        href="https://github.com/111-Network/111.network-website"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                      >
-                        View on GitHub
-                      </a>
-                      <a
-                        href="/docs"
-                        className="inline-flex items-center justify-center rounded-md border border-border bg-background px-6 py-3 text-sm font-medium transition-colors hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                      >
-                        Documentation
-                      </a>
-                    </div>
-                  </div>
-                </AnimatedSection>
+                </div>
               </div>
-            </AnimatedSection>
-          </Container>
+            </Container>
+          </div>
         </Section>
 
-        {/* Footer */}
-        <footer className="border-t border-border bg-background/50 py-8 backdrop-blur-sm">
-          <Container size="lg">
-            <div className="flex flex-col items-center justify-between gap-4 text-center sm:flex-row">
-              <p className="text-sm text-muted-foreground">
-                © {new Date().getFullYear()} 111 Network. Open Source.
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Status: <span className="font-mono text-warning">In Development</span>
-              </p>
-            </div>
-          </Container>
-        </footer>
+        <Footer />
       </main>
     </>
   );

@@ -25,6 +25,7 @@
 - Write self-documenting code
 - Add comments for complex logic
 - Keep components small and focused
+- **shadcn/ui**: When using shadcn/ui components, refer to [shadcnblocks.com](https://docs.shadcnblocks.com/) for block patterns
 
 ### Pull Request Process
 
