@@ -10,7 +10,7 @@ export default function BroadcastPage() {
       <main className="relative min-h-screen">
         <Section className="py-16">
           <Container size="lg">
-            {/* Blank page - to be developed next */}
+            <div>{/* Blank page - to be developed next */}</div>
           </Container>
         </Section>
         <Footer />
