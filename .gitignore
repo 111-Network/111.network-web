@@ -75,3 +75,8 @@ debug.log
 *.key
 *.cert
 *.crt
+
+# Supabase (optional - generated files only, config.toml should be tracked)
+supabase/.temp/
+supabase/.branches/
+supabase/.temp/

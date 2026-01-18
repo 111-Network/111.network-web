@@ -2,10 +2,11 @@
 
 ## Current State
 
-- **Monorepo**: Turborepo structure (upcoming setup)
-- **Database**: Supabase (upcoming integration)
-- **Live App**: `apps/website` - Next.js 16 with App Router
+- **Monorepo**: Turborepo v2.7.5 configured and operational
+- **Database**: Supabase initialized (local dev config ready)
+- **Live App**: `apps/website` - Next.js 16 with App Router (deployed on Vercel)
 - **Packages**: `packages/` for shared code (database, protocol, ui)
+- **Security**: Audit complete, open source ready
 
 ## Structure
 
@@ -16,7 +17,8 @@
 
 ## Backend
 
-- **Database**: See [ADR-0001](adr/0001-vercel-postgres-nextjs-api-routes.md) for database decision
+- **Database**: Supabase (PostgreSQL) - See [ADR-0001](adr/0001-vercel-postgres-nextjs-api-routes.md) for context
+- **Local Dev**: Supabase CLI configured in `supabase/` directory
 - **API**: Next.js API Routes in `apps/website/app/api/` (when implemented)
 
 ## Principles
