@@ -64,7 +64,7 @@ export function Navigation({
         const menuContainer = navEl.querySelector('[style*="gap"]') as HTMLElement;
         let menuGap = 'missing';
         let menuDisplay = 'missing';
-        let menuItems = [];
+        let menuItems: Array<{ index: number; spacing: number }> = [];
         if (menuContainer) {
           const menuStyle = window.getComputedStyle(menuContainer);
           menuGap = menuStyle.gap;
