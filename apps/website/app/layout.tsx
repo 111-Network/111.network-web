@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@111-network/ui";
 import { TermsBanner } from "@/components/terms-banner";
 import "./globals.css";
 

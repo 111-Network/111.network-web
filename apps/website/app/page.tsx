@@ -1,12 +1,12 @@
 "use client";
 
 import { Section } from "@/components/section";
-import { Container } from "@/components/container";
-import { Navigation } from "@/components/navigation";
-import { Footer } from "@/components/footer";
+import { Container, Navigation, Footer } from "@111-network/ui";
 import { TypewriterText } from "@/components/typewriter-text";
 import { AnimatedSection } from "@/components/animated-section";
 import { Globe } from "@/components/magicui/globe";
+import { GlitchText } from "@/components/glitch-text";
+import Link from "next/link";
 
 export default function Home() {
   const typewriterPhrases = [
@@ -18,7 +18,45 @@ export default function Home() {
 
   return (
     <>
-      <Navigation />
+      <Navigation
+        logo={
+          <Link href="/" className="block font-mono">
+            <GlitchText
+              className="text-xl font-semibold"
+              intensity="medium"
+              randomTiming={true}
+            >
+              111 Network
+            </GlitchText>
+          </Link>
+        }
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Network", href: "/network" },
+          { label: "About", href: "/about" },
+          { label: "Resources", href: "/resources" },
+        ]}
+        ctaItems={
+          <>
+            <Link
+              href="/broadcast"
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-border bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              style={{ minHeight: '2.5rem' }}
+            >
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-error pulse-glow flex-shrink-0"></span>
+              <span>Broadcast</span>
+            </Link>
+            <a
+              href="https://github.com/111-Network"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            >
+              <GlitchText intensity="low">Get Involved</GlitchText>
+            </a>
+          </>
+        }
+      />
       <main className="relative min-h-screen">
         <Section fullHeight className="relative flex items-center justify-center">
           <div className="relative z-10 w-full">
@@ -57,7 +95,17 @@ export default function Home() {
           </div>
         </Section>
 
-        <Footer />
+        <Footer
+          copyright={`© ${new Date().getFullYear()} 111 Network. Open Source.`}
+          links={[
+            { label: "Terms", href: "/terms" },
+          ]}
+          showThemeToggle={true}
+        >
+          <p className="text-sm text-muted-foreground">
+            Status: <span className="font-mono text-warning">In Development</span>
+          </p>
+        </Footer>
       </main>
     </>
   );

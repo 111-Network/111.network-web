@@ -11,9 +11,19 @@
 ## Structure
 
 - **apps/website**: Main Next.js application
+- **apps/map**: Map application (upcoming)
 - **packages/database**: Database utilities (upcoming)
 - **packages/protocol**: Protocol implementation (upcoming)
-- **packages/ui**: Shared UI components (upcoming)
+- **packages/ui**: Shared UI components and design system ✅
+
+## Monorepo Principles
+
+**IMPORTANT**: This is a monorepo with shared UI components.
+
+- **Global UI**: `packages/ui/` - Shared components, styles, design tokens used by ALL apps
+- **Local Apps**: `apps/website/`, `apps/map/` - Project-specific code only
+- **Rule**: NEVER create duplicate UI components in apps. Always use `@111-network/ui` imports
+- **Migration**: Components should be in `packages/ui/src/components/` and exported from `packages/ui/src/index.ts`
 
 ## Backend
 

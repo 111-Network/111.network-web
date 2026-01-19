@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  transpilePackages: ["@111-network/ui"],
 };
 
 export default nextConfig;

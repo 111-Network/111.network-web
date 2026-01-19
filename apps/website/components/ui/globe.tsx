@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 import createGlobe, { COBEOptions } from "cobe"
 import { useMotionValue, useSpring } from "motion/react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@111-network/ui"
 
 const MOVEMENT_DAMPING = 1400
 

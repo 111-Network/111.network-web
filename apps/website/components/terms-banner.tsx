@@ -1,10 +1,9 @@
 "use client";
 
-import * as React from "react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@111-network/ui";
 
 export function TermsBanner() {
   const [isVisible, setIsVisible] = useState(false);
