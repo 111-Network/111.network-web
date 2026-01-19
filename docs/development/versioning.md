@@ -2,7 +2,7 @@
 
 ## Current Version
 
-**v0.1.4** (Pre-MVP)
+**v0.1.6** (Pre-MVP)
 
 ## Version Format
 
@@ -27,6 +27,8 @@ Currently in **Pre-MVP** phase:
 
 ## Version History
 
+- **v0.1.6** (2026-01-19): Bug fixes - Fixed rate limiting errors, message flicker, TypeScript build errors, added Supabase CLI
+- **v0.1.5** (2026-01-19): Map UI MVP - Interactive MapLibre map, broadcast panel, message markers, full frontend implementation
 - **v0.1.4** (2026-01-19): Backend MVP - Broadcast API with rate limiting, database schema, RLS policies
 - **v0.1.3** (2026-01-16): UI migration complete, header/footer fixes, documentation cleanup
 - **v0.1.2** (2026-01-16): Turborepo configured, Supabase initialized, security audit complete

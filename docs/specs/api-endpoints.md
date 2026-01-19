@@ -2,7 +2,7 @@
 
 ## Status
 
-**v0.1.4** - Backend MVP implemented for broadcast messages
+**v0.1.5** - Backend and Frontend MVP implemented for broadcast messages
 
 ## Overview
 

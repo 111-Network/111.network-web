@@ -1,6 +1,6 @@
 {
   "name": "111-network-web",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "private": true,
   "description": "111 Network Web - Monorepo for web applications and packages",
   "engines": {
@@ -8,15 +8,21 @@
     "pnpm": ">=9.0.0"
   },
   "packageManager": "pnpm@9.0.0",
+  "devDependencies": {
+    "supabase": "^2.72.7",
+    "turbo": "^2.7.5"
+  },
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "start": "turbo run start",
     "lockfile:check": "pnpm install --frozen-lockfile",
-    "lockfile:fix": "rm pnpm-lock.yaml && pnpm install"
-  },
-  "devDependencies": {
-    "turbo": "^2.7.5"
+    "lockfile:fix": "rm pnpm-lock.yaml && pnpm install",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:status": "supabase status",
+    "supabase:reset": "cd supabase && supabase db reset",
+    "supabase:migration:up": "cd supabase && supabase migration up"
   }
 }

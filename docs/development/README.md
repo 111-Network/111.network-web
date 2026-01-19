@@ -2,8 +2,8 @@
 
 This directory contains guides and documentation for developers working on the 111 Network web monorepo.
 
-**Version**: v0.1.4 (Pre-MVP)  
-**Monorepo**: Turborepo v2.7.5 configured, Backend MVP complete with broadcast API
+**Version**: v0.1.6 (Pre-MVP)  
+**Monorepo**: Turborepo v2.7.5 configured, Map UI MVP complete with interactive MapLibre map
 
 ## Available Guides
 
@@ -19,6 +19,20 @@ This directory contains guides and documentation for developers working on the 1
 4. Check `../adr/` for architectural decisions
 
 ## Troubleshooting
+
+### Stopping Development Servers (Ctrl+C)
+
+When running `pnpm dev` with Turborepo, stopping the servers with Ctrl+C may require pressing it twice:
+
+1. **First Ctrl+C**: Sends interrupt signal to all processes. You may see:
+   ```
+   ERROR run failed: command exited (1)
+   ```
+   This is normal - it indicates processes were interrupted.
+
+2. **Second Ctrl+C** (if needed): Forcefully terminates any remaining processes.
+
+This behavior is expected when running multiple persistent processes (like Next.js dev servers). The error message is just Turborepo reporting that processes exited with code 1 (interrupted), not an actual error.
 
 ### Globe Component Not Rendering
 **Issue**: Globe component showed CSS rings instead of 3D globe with red dots.  

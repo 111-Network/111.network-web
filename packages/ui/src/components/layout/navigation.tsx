@@ -142,7 +142,7 @@ export function Navigation({
           {/* Centered Navigation - Absolutely positioned for true centering */}
           {items.length > 0 && (
             <div 
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center justify-center"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center justify-center z-10"
               style={{ gap: '2rem', display: isMd ? 'flex' : 'none' }}
             >
               {items.map((item) => {

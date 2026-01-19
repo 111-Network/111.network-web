@@ -16,6 +16,8 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
+export type GeoPrecision = 'exact' | 'approx' | 'region';
+
 export interface Database {
   public: {
     Tables: {
@@ -83,7 +85,7 @@ export interface Database {
           content: string;
           latitude: number;
           longitude: number;
-          geo_precision: 'exact' | 'approx' | 'region';
+          geo_precision: GeoPrecision;
           status: 'published' | 'pending';
           device_id: string;
           profile_id: string | null;
@@ -94,7 +96,7 @@ export interface Database {
           content: string;
           latitude: number;
           longitude: number;
-          geo_precision?: 'exact' | 'approx' | 'region';
+          geo_precision?: GeoPrecision;
           status?: 'published' | 'pending';
           device_id: string;
           profile_id?: string | null;
@@ -105,7 +107,7 @@ export interface Database {
           content?: string;
           latitude?: number;
           longitude?: number;
-          geo_precision?: 'exact' | 'approx' | 'region';
+          geo_precision?: GeoPrecision;
           status?: 'published' | 'pending';
           device_id?: string;
           profile_id?: string | null;

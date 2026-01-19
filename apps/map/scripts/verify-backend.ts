@@ -10,10 +10,43 @@
 
 import { createClient } from '@supabase/supabase-js';
 import { randomUUID } from 'crypto';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
+// Load .env.local file manually (tsx doesn't auto-load it)
+function loadEnvLocal() {
+  try {
+    const envPath = join(process.cwd(), '.env.local');
+    const envFile = readFileSync(envPath, 'utf-8');
+    const lines = envFile.split('\n');
+    
+    for (const line of lines) {
+      const trimmed = line.trim();
+      // Skip comments and empty lines
+      if (!trimmed || trimmed.startsWith('#')) continue;
+      
+      const match = trimmed.match(/^([^=]+)=(.*)$/);
+      if (match) {
+        const key = match[1].trim();
+        const value = match[2].trim().replace(/^["']|["']$/g, ''); // Remove quotes
+        if (!process.env[key]) {
+          process.env[key] = value;
+        }
+      }
+    }
+  } catch (error) {
+    // .env.local might not exist, that's okay - user might be using system env vars
+    console.warn('⚠️  Could not load .env.local file (this is okay if using system environment variables)');
+  }
+}
+
+// Load environment variables from .env.local
+loadEnvLocal();
 
 // Load environment variables
+// Support both NEXT_PUBLIC_SUPABASE_ANON_KEY and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey || !supabaseServiceRoleKey) {

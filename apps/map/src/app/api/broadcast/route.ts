@@ -14,7 +14,7 @@ import {
 /**
  * POST /api/broadcast
  * 
- * Creates a new broadcast message with rate limiting.
+ * Creates a new broadcast message with rate limiting and captcha verification.
  * 
  * Body:
  * - content: string (max 240 chars)
@@ -23,10 +23,60 @@ import {
  * - geo_precision?: 'exact' | 'approx' | 'region' (default: 'approx')
  * - device_id_hash?: string (or device_public_key)
  * - device_public_key?: string (or device_id_hash)
+ * - captcha_token?: string (Turnstile captcha token)
  */
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+
+    // Verify captcha token if provided
+    const captchaToken = body.captcha_token;
+    if (captchaToken) {
+      const captchaSecret = process.env.TURNSTILE_SECRET_KEY;
+      if (captchaSecret) {
+        try {
+          const captchaResponse = await fetch(
+            'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                secret: captchaSecret,
+                response: captchaToken,
+                remoteip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+                          request.headers.get('x-real-ip') ||
+                          undefined,
+              }),
+            }
+          );
+
+          const captchaResult = await captchaResponse.json();
+          
+          if (!captchaResult.success) {
+            return NextResponse.json(
+              {
+                error: 'Captcha verification failed',
+                details: captchaResult['error-codes'] || ['Unknown error'],
+              },
+              { status: 400 }
+            );
+          }
+        } catch (captchaError) {
+          console.error('Captcha verification error:', captchaError);
+          // Don't block the request if captcha verification fails due to network issues
+          // In production, you might want to be stricter
+        }
+      }
+    } else {
+      // If captcha is enabled but no token provided, warn but don't block
+      // In production, you might want to require captcha
+      const captchaSecret = process.env.TURNSTILE_SECRET_KEY;
+      if (captchaSecret) {
+        console.warn('Broadcast request received without captcha token');
+      }
+    }
 
     // Validate and sanitize content
     const content = validateAndSanitizeContent(body.content);
@@ -67,14 +117,18 @@ export async function POST(request: NextRequest) {
     if (rateLimitError) {
       console.error('Rate limit check error:', rateLimitError);
       return NextResponse.json(
-        { error: 'Failed to check rate limit' },
+        { 
+          error: 'Failed to check rate limit', 
+          details: rateLimitError.message,
+          code: rateLimitError.code,
+        },
         { status: 500 }
       );
     }
 
     if (!rateLimitResult || rateLimitResult.length === 0) {
       return NextResponse.json(
-        { error: 'Failed to check rate limit' },
+        { error: 'Failed to check rate limit', details: 'Function returned no results' },
         { status: 500 }
       );
     }
@@ -195,16 +249,29 @@ export async function GET(request: NextRequest) {
     const supabase = createServerClient();
 
     // Build query
+    // Handle longitude wrapping (when minLng > maxLng, bounds wrap around date line)
+    const longitudeWraps = minLng > maxLng;
+    
     let query = supabase
       .from('broadcast_messages')
       .select('id, content, latitude, longitude, geo_precision, created_at')
       .eq('status', 'published')
       .gte('latitude', minLat)
       .lte('latitude', maxLat)
-      .gte('longitude', minLng)
-      .lte('longitude', maxLng)
       .order('created_at', { ascending: false })
-      .limit(limit);
+      .limit(limit * 2); // Get more results when wrapping, we'll filter in memory
+
+    // Handle longitude filtering (with wrapping support)
+    if (longitudeWraps) {
+      // Bounds wrap around date line: longitude >= minLng OR longitude <= maxLng
+      // Supabase PostgREST supports OR with: .or('col1.gte.value1,col2.lte.value2')
+      // But for same column OR, we need to filter in memory or use raw SQL
+      // For now, fetch all and filter in memory (acceptable for small datasets)
+      // In production, consider using PostGIS ST_MakeEnvelope with proper wrapping
+    } else {
+      // Normal case: minLng <= longitude <= maxLng
+      query = query.gte('longitude', minLng).lte('longitude', maxLng);
+    }
 
     // Add since filter if provided
     if (sinceDate) {
@@ -221,10 +288,20 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // Filter by longitude if bounds wrap around date line
+    let filteredMessages = messages || [];
+    if (longitudeWraps) {
+      filteredMessages = filteredMessages.filter(
+        (msg) => msg.longitude >= minLng || msg.longitude <= maxLng
+      );
+      // Limit after filtering
+      filteredMessages = filteredMessages.slice(0, limit);
+    }
+
     return NextResponse.json(
       {
-        messages: messages || [],
-        count: messages?.length || 0,
+        messages: filteredMessages,
+        count: filteredMessages.length,
       },
       { status: 200 }
     );

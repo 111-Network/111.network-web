@@ -35,9 +35,13 @@ This document outlines the testing strategy for the 111 Network website. Testing
 
 ## Testing Tools
 
-Testing tools will be selected and documented here as they are chosen. Potential tools:
-- Jest (unit testing)
-- React Testing Library (component testing)
+**Selected Tools** (implemented in `apps/map`):
+- **Jest** (v29.7.0) - Unit and integration testing
+- **React Testing Library** (v14.1.2) - Component testing
+- **@testing-library/jest-dom** - Custom matchers for DOM testing
+- **@testing-library/user-event** - User interaction simulation
+
+**Future Tools** (not yet implemented):
 - Playwright or Cypress (E2E testing)
 - axe-core (accessibility testing)
 
@@ -50,10 +54,21 @@ Tests will be organized alongside the code they test:
 
 ## Running Tests
 
-Test commands will be documented here once testing is set up:
-- `npm test` - Run all tests
-- `npm run test:watch` - Run tests in watch mode
-- `npm run test:coverage` - Run tests with coverage report
+**Map App** (`apps/map`):
+- `pnpm test` - Run all tests
+- `pnpm test:watch` - Run tests in watch mode
+- `pnpm test:coverage` - Run tests with coverage report
+
+**Test Structure**:
+- Component tests: `src/components/**/__tests__/*.test.tsx`
+- Hook tests: `src/hooks/__tests__/*.test.ts`
+- Utility tests: `src/lib/__tests__/*.test.ts`
+
+**Jest Configuration**:
+- Located at `apps/map/jest.config.js`
+- Uses Next.js Jest preset
+- Module path mapping configured for `@/*` imports
+- Setup file: `jest.setup.js` for global test configuration
 
 ## Continuous Integration
 

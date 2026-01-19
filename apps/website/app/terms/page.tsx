@@ -2,6 +2,7 @@ import { Section } from "@/components/section";
 import { Container, Navigation, Footer } from "@111-network/ui";
 import Link from "next/link";
 import { GlitchText } from "@/components/glitch-text";
+import { getMapAppUrl } from "@/lib/map-url";
 
 export default function TermsPage() {
   return (
@@ -26,13 +27,13 @@ export default function TermsPage() {
         ]}
         ctaItems={
           <>
-            <Link
-              href="/broadcast"
+            <a
+              href={`${getMapAppUrl()}#broadcast`}
               className="inline-flex items-center justify-center gap-2 rounded-md border border-border bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
             >
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-error pulse-glow flex-shrink-0"></span>
               <span className="flex items-center justify-center">Broadcast</span>
-            </Link>
+            </a>
             <a
               href="https://github.com/111-Network"
               target="_blank"

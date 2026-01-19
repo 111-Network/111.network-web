@@ -1,7 +1,7 @@
 # 111 Network Web - Documentation
 
-**Version**: v0.1.4 (Pre-MVP)  
-**Status**: Backend MVP complete - Broadcast API with rate limiting and database schema
+**Version**: v0.1.6 (Pre-MVP)  
+**Status**: Map UI MVP complete - Interactive MapLibre map with broadcast panel and full frontend
 
 ## Current State
 
@@ -9,6 +9,7 @@
 - **Live App**: `apps/website` - Next.js 16 application (deployed on Vercel)
 - **Packages**: `packages/` directory structure in place (database, protocol, ui)
 - **Database**: Supabase with migrations, RLS policies, and broadcast API ✅
+- **Map App**: Interactive MapLibre map with broadcast panel ✅
 - **Build System**: Turborepo configured with pnpm workspaces
 - **Security**: Audit complete, ready for public open source
 - **Node**: v24.13.0

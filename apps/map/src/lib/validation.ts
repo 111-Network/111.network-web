@@ -152,6 +152,7 @@ export function validateDeviceIdentifier(
 
 /**
  * Validates bounding box parameters
+ * Handles longitude wrapping (e.g., -183 to 174 wraps around the date line)
  */
 export function validateBoundingBox(bbox: string): {
   minLat: number;
@@ -178,17 +179,76 @@ export function validateBoundingBox(bbox: string): {
   // Validate ranges
   validateLatitude(minLat);
   validateLatitude(maxLat);
-  validateLongitude(minLng);
-  validateLongitude(maxLng);
+  
+  // For longitude, allow values outside -180/180 for wrapping
+  // We'll handle wrapping in the query, so just check they're finite numbers
+  if (!isFinite(minLng) || !isFinite(maxLng)) {
+    throw new Error('Longitude values must be finite numbers');
+  }
 
-  // Validate that min < max
+  // Validate that min < max for latitude
   if (minLat >= maxLat) {
     throw new Error('minLat must be less than maxLat');
   }
 
-  if (minLng >= maxLng) {
-    throw new Error('minLng must be less than maxLng');
+  // For longitude, if minLng > maxLng, it means it wraps around the date line
+  // This is valid (e.g., 170 to -170 wraps across the Pacific)
+  // We'll handle this in the query with OR logic
+  
+  return { minLat, maxLat, minLng, maxLng };
+}
+
+/**
+ * Validates location string
+ * Location string should be non-empty and reasonable length
+ */
+export function validateLocationString(location: unknown): string {
+  if (typeof location !== 'string') {
+    throw new Error('Location must be a string');
   }
 
-  return { minLat, maxLat, minLng, maxLng };
+  const trimmed = location.trim();
+
+  if (trimmed.length === 0) {
+    throw new Error('Location cannot be empty');
+  }
+
+  if (trimmed.length > 200) {
+    throw new Error('Location string is too long (max 200 characters)');
+  }
+
+  // Basic sanitization - remove HTML tags
+  const sanitized = trimmed.replace(/<[^>]*>/g, '');
+
+  if (sanitized.length === 0) {
+    throw new Error('Location cannot be empty after sanitization');
+  }
+
+  return sanitized;
+}
+
+/**
+ * Extracts coordinates from a location string
+ * This is used when a location string is provided but coordinates are needed
+ * The location string should be in a format that can be geocoded
+ * 
+ * Note: This function doesn't actually geocode - it's a placeholder for when
+ * coordinates are already known (e.g., from autocomplete selection).
+ * For actual geocoding, use the location search API.
+ */
+export function extractCoordinatesFromLocation(
+  location: string,
+  latitude?: number,
+  longitude?: number
+): { latitude: number; longitude: number } {
+  // If coordinates are provided, validate and use them
+  if (latitude !== undefined && longitude !== undefined) {
+    const lat = validateLatitude(latitude);
+    const lng = validateLongitude(longitude);
+    return { latitude: lat, longitude: lng };
+  }
+
+  // If no coordinates provided, we need to geocode
+  // This should be handled by the API/component that has access to geocoding
+  throw new Error('Coordinates must be provided with location string');
 }

@@ -11,7 +11,7 @@
 ## Structure
 
 - **apps/website**: Main Next.js application
-- **apps/map**: Map application with broadcast API backend ✅
+- **apps/map**: Map application with interactive MapLibre map and broadcast panel ✅
 - **packages/database**: Database utilities (upcoming)
 - **packages/protocol**: Protocol implementation (upcoming)
 - **packages/ui**: Shared UI components and design system ✅
@@ -35,6 +35,16 @@
 - **Migrations**: Supabase migrations in `supabase/migrations/` ✅
 - **Rate Limiting**: 20 posts per 24h per device (configurable)
 - **Security**: RLS policies, input validation, IP hashing
+
+## Frontend (Map App)
+
+- **Map Library**: MapLibre GL JS with react-map-gl ✅
+- **UI Components**: Shared components from `@111-network/ui` package ✅
+- **Broadcast Panel**: Slide-out panel with glassmorphism effect ✅
+- **Message Markers**: Red markers on map showing broadcast locations ✅
+- **Theme Support**: Dark mode default, light mode toggle ✅
+- **Responsive Design**: Mobile-friendly with bottom sheet on mobile ✅
+- **Testing**: Jest + React Testing Library setup ✅
 
 ## Principles
 

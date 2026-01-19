@@ -35,7 +35,7 @@ This is a Turborepo monorepo (setup upcoming):
 
 - **apps/website**: Main Next.js application (currently live)
 - **packages/**: Shared packages (database, protocol, ui)
-- Root `package.json`: Monorepo configuration and versioning (v0.1.3)
+- Root `package.json`: Monorepo configuration and versioning (v0.1.5)
 
 ## Common Commands
 
