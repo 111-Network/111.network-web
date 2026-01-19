@@ -2,8 +2,8 @@
 
 This directory contains guides and documentation for developers working on the 111 Network web monorepo.
 
-**Version**: v0.1.3 (Pre-MVP)  
-**Monorepo**: Turborepo v2.7.5 configured, UI migration complete, header/footer fixes
+**Version**: v0.1.4 (Pre-MVP)  
+**Monorepo**: Turborepo v2.7.5 configured, Backend MVP complete with broadcast API
 
 ## Available Guides
 

@@ -2,7 +2,7 @@
 
 ## Current Version
 
-**v0.1.3** (Pre-MVP)
+**v0.1.4** (Pre-MVP)
 
 ## Version Format
 
@@ -27,6 +27,7 @@ Currently in **Pre-MVP** phase:
 
 ## Version History
 
+- **v0.1.4** (2026-01-19): Backend MVP - Broadcast API with rate limiting, database schema, RLS policies
 - **v0.1.3** (2026-01-16): UI migration complete, header/footer fixes, documentation cleanup
 - **v0.1.2** (2026-01-16): Turborepo configured, Supabase initialized, security audit complete
 - **v0.1.1** (2026-01-16): Turborepo monorepo setup with pnpm workspaces

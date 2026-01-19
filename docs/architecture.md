@@ -11,7 +11,7 @@
 ## Structure
 
 - **apps/website**: Main Next.js application
-- **apps/map**: Map application (upcoming)
+- **apps/map**: Map application with broadcast API backend ✅
 - **packages/database**: Database utilities (upcoming)
 - **packages/protocol**: Protocol implementation (upcoming)
 - **packages/ui**: Shared UI components and design system ✅
@@ -29,7 +29,12 @@
 
 - **Database**: Supabase (PostgreSQL) - See [ADR-0001](adr/0001-vercel-postgres-nextjs-api-routes.md) for context
 - **Local Dev**: Supabase CLI configured in `supabase/` directory
-- **API**: Next.js API Routes in `apps/website/app/api/` (when implemented)
+- **API**: Next.js API Routes in `apps/map/src/app/api/broadcast/` ✅
+  - POST `/api/broadcast` - Create broadcast messages with rate limiting
+  - GET `/api/broadcast` - Fetch messages with bounding box filtering
+- **Migrations**: Supabase migrations in `supabase/migrations/` ✅
+- **Rate Limiting**: 20 posts per 24h per device (configurable)
+- **Security**: RLS policies, input validation, IP hashing
 
 ## Principles
 

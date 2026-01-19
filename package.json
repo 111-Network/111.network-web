@@ -1,6 +1,6 @@
 {
   "name": "111-network-web",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
   "description": "111 Network Web - Monorepo for web applications and packages",
   "engines": {

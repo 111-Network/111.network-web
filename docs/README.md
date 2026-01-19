@@ -1,14 +1,14 @@
 # 111 Network Web - Documentation
 
-**Version**: v0.1.3 (Pre-MVP)  
-**Status**: UI migration complete, header/footer fixes, documentation cleanup
+**Version**: v0.1.4 (Pre-MVP)  
+**Status**: Backend MVP complete - Broadcast API with rate limiting and database schema
 
 ## Current State
 
 - **Monorepo Structure**: Turborepo v2.7.5 configured and operational
 - **Live App**: `apps/website` - Next.js 16 application (deployed on Vercel)
 - **Packages**: `packages/` directory structure in place (database, protocol, ui)
-- **Database**: Supabase initialized and configured (local dev ready)
+- **Database**: Supabase with migrations, RLS policies, and broadcast API ✅
 - **Build System**: Turborepo configured with pnpm workspaces
 - **Security**: Audit complete, ready for public open source
 - **Node**: v24.13.0

@@ -1,36 +1,135 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 111 Network - Map Application
 
-## Getting Started
+Map application for displaying and creating broadcast messages on a global map.
 
-First, run the development server:
+## Status
 
+**Backend MVP**: ✅ Complete  
+**Frontend UI**: 🚧 Coming soon
+
+## Features
+
+- **Broadcast API**: Create and fetch anonymous broadcast messages
+- **Rate Limiting**: 20 posts per 24 hours per device (configurable)
+- **Geospatial Queries**: Bounding box filtering for map views
+- **Security**: Row Level Security (RLS), input validation, IP hashing
+
+## Tech Stack
+
+- **Framework**: Next.js 16.1.3 (App Router)
+- **Database**: Supabase (PostgreSQL)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 4
+
+## Setup
+
+1. **Install dependencies**:
+   ```bash
+   pnpm install
+   ```
+
+2. **Set up environment variables**:
+   - Copy `ENV.md` to `.env.local`
+   - Fill in your Supabase credentials (see `ENV.md` for details)
+
+3. **Run database migrations**:
+   ```bash
+   supabase migration up
+   ```
+
+4. **Start development server**:
+   ```bash
+   pnpm dev
+   ```
+
+## API Endpoints
+
+See [API Endpoints Documentation](../../docs/specs/api-endpoints.md) for complete API documentation.
+
+### Quick Examples
+
+**Create a message**:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+curl -X POST http://localhost:3000/api/broadcast \
+  -H "Content-Type: application/json" \
+  -d '{
+    "content": "Hello from San Francisco!",
+    "latitude": 37.7749,
+    "longitude": -122.4194,
+    "device_public_key": "device-key-123"
+  }'
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Fetch messages**:
+```bash
+curl "http://localhost:3000/api/broadcast?bbox=37.0,38.0,-123.0,-122.0"
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+apps/map/
+├── src/
+│   ├── app/
+│   │   └── api/
+│   │       └── broadcast/
+│   │           └── route.ts          # API endpoints
+│   ├── lib/
+│   │   ├── supabase/
+│   │   │   ├── server.ts            # Server-only client (service role)
+│   │   │   └── client.ts            # Browser client (anon key)
+│   │   ├── types/
+│   │   │   └── database.ts          # Database types
+│   │   └── validation.ts           # Input validation utilities
+│   └── scripts/
+│       └── verify-backend.ts        # Backend verification script
+├── ENV.md                           # Environment variables documentation
+└── package.json
+```
 
-## Learn More
+## Verification
 
-To learn more about Next.js, take a look at the following resources:
+Run the verification script to test RLS policies and API functionality:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm verify-backend
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Environment Variables
 
-## Deploy on Vercel
+See `ENV.md` for required environment variables and security notes.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Important**: Never commit `.env.local` or expose `SUPABASE_SERVICE_ROLE_KEY` to the client.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Database Schema
+
+The database schema is defined in Supabase migrations:
+- `supabase/migrations/20260119154740_create_broadcast_tables.sql`
+
+Key tables:
+- `broadcast_messages`: Public broadcast messages
+- `anonymous_devices`: Device tracking for rate limiting
+- `profiles`: User profiles (optional, for future auth)
+
+## Security
+
+- ✅ Row Level Security (RLS) policies enabled
+- ✅ Input validation and sanitization
+- ✅ IP address hashing for privacy
+- ✅ Device identifier hashing
+- ✅ Service role key never exposed to client
+- ✅ Rate limiting per device and IP
+
+## Development
+
+- **Linting**: `pnpm lint`
+- **Build**: `pnpm build`
+- **Start**: `pnpm start`
+
+## Future Enhancements
+
+- Frontend UI for map visualization
+- User authentication (optional)
+- Moderation workflow
+- Advanced geospatial queries (PostGIS)
+- Private messaging
