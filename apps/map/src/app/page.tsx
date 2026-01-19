@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { Navigation, Footer, GlitchText } from '@111-network/ui';
 import { MapView } from '@/components/map/map-view';
@@ -12,6 +12,28 @@ export default function MapPage() {
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
   const { isOpen, openPanel, closePanel } = useBroadcastPanel();
   const { messages, updateBounds, refresh, addMessage } = useMapBounds();
+
+  // #region agent log
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Check for browser APIs that might trigger prompts
+      const hasGeolocation = 'geolocation' in navigator;
+      const hasServiceWorker = 'serviceWorker' in navigator;
+      const hasLocalStorage = typeof Storage !== 'undefined';
+      fetch('http://127.0.0.1:7252/ingest/eeb893fd-bd95-466c-90c9-11814a44ceb9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'page.tsx:mount',message:'Page mounted - browser APIs',data:{hasGeolocation,hasServiceWorker,hasLocalStorage,url:window.location.href},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+      
+      // Check main container dimensions after mount
+      setTimeout(() => {
+        const mainEl = document.querySelector('main');
+        if (mainEl) {
+          const rect = mainEl.getBoundingClientRect();
+          const computedStyle = window.getComputedStyle(mainEl);
+          fetch('http://127.0.0.1:7252/ingest/eeb893fd-bd95-466c-90c9-11814a44ceb9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'page.tsx:main-container',message:'Main container dimensions',data:{width:rect.width,height:rect.height,computedHeight:computedStyle.height,computedWidth:computedStyle.width},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+        }
+      }, 100);
+    }
+  }, []);
+  // #endregion
 
   // Map click disabled - only use broadcast button in header
   // Removed handleMapClick callback

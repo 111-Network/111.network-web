@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useEffect, useRef } from 'react';
 import Map, { Marker, AttributionControl, ViewStateChangeEvent } from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { useTheme } from 'next-themes';
@@ -25,10 +25,31 @@ export function MapView({
   selectedLocation,
 }: MapViewProps) {
   const { theme } = useTheme();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mapLoadedRef = useRef(false);
+  
   const mapStyle = useMemo(
     () => (theme === 'light' ? MAP_CONFIG.styles.light : MAP_CONFIG.styles.dark),
     [theme]
   );
+
+  // #region agent log
+  useEffect(() => {
+    if (typeof window !== 'undefined' && containerRef.current) {
+      const container = containerRef.current;
+      const rect = container.getBoundingClientRect();
+      fetch('http://127.0.0.1:7252/ingest/eeb893fd-bd95-466c-90c9-11814a44ceb9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'map-view.tsx:container-check',message:'Map container dimensions',data:{width:rect.width,height:rect.height,visible:rect.width>0&&rect.height>0},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+    }
+  }, []);
+  // #endregion
+
+  // #region agent log
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      fetch('http://127.0.0.1:7252/ingest/eeb893fd-bd95-466c-90c9-11814a44ceb9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'map-view.tsx:map-style',message:'Map style URL',data:{style:mapStyle,theme},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+    }
+  }, [mapStyle, theme]);
+  // #endregion
 
   // Map click disabled - removed handleMapClick
 
@@ -48,7 +69,7 @@ export function MapView({
   );
 
   return (
-    <div className="h-full w-full relative">
+    <div ref={containerRef} className="h-full w-full relative">
       <Map
         mapStyle={mapStyle}
         initialViewState={MAP_CONFIG.initialViewState}
@@ -56,6 +77,12 @@ export function MapView({
         maxZoom={MAP_CONFIG.maxZoom}
         onMoveEnd={handleMoveEnd}
         onLoad={(event) => {
+          // #region agent log
+          if (typeof window !== 'undefined') {
+            fetch('http://127.0.0.1:7252/ingest/eeb893fd-bd95-466c-90c9-11814a44ceb9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'map-view.tsx:onLoad',message:'Map loaded successfully',data:{target:!!event.target,hasBounds:!!event.target?.getBounds()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+            mapLoadedRef.current = true;
+          }
+          // #endregion
           // Trigger bounds change on initial load to fetch messages
           if (onBoundsChange) {
             const bounds = event.target.getBounds();
@@ -66,6 +93,13 @@ export function MapView({
               maxLng: bounds.getEast(),
             });
           }
+        }}
+        onError={(error) => {
+          // #region agent log
+          if (typeof window !== 'undefined') {
+            fetch('http://127.0.0.1:7252/ingest/eeb893fd-bd95-466c-90c9-11814a44ceb9',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'map-view.tsx:onError',message:'Map error',data:{error:error?.error?.message||String(error)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+          }
+          // #endregion
         }}
         style={{ width: '100%', height: '100%' }}
         cursor="default"

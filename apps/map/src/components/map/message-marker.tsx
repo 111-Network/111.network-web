@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Marker, Popup } from 'react-map-gl/maplibre';
+import { X } from 'lucide-react';
 import type { BroadcastMessage } from '@/hooks/use-map-bounds';
 
 interface MessageMarkerProps {
@@ -34,12 +35,12 @@ export function MessageMarker({ message }: MessageMarkerProps) {
       >
         <div className="cursor-pointer">
           <div
-            className="w-6 h-6 bg-error rounded-full border-2 border-background shadow-lg flex items-center justify-center"
+            className="w-4 h-4 bg-error rounded-full border-2 border-background shadow-lg flex items-center justify-center"
             style={{
               backgroundColor: 'hsl(var(--error))',
             }}
           >
-            <div className="w-2 h-2 bg-background rounded-full" />
+            <div className="w-1.5 h-1.5 bg-background rounded-full" />
           </div>
         </div>
       </Marker>
@@ -50,13 +51,43 @@ export function MessageMarker({ message }: MessageMarkerProps) {
           latitude={message.latitude}
           anchor="bottom"
           onClose={() => setShowPopup(false)}
-          closeButton={true}
+          closeButton={false}
           closeOnClick={false}
           className="max-w-xs"
         >
-          <div className="p-2">
-            <p className="text-sm text-foreground mb-2">{message.content}</p>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <div 
+            className="p-3 bg-background border border-border rounded-md shadow-lg"
+            style={{
+              backgroundColor: 'hsl(var(--background))',
+              color: 'hsl(var(--foreground))',
+            }}
+          >
+            <div className="flex items-start justify-between gap-2 mb-2">
+              <p 
+                className="text-sm flex-1"
+                style={{
+                  color: 'hsl(var(--foreground))',
+                }}
+              >
+                {message.content}
+              </p>
+              <button
+                onClick={() => setShowPopup(false)}
+                className="flex-shrink-0 p-1 rounded hover:bg-muted transition-colors"
+                aria-label="Close"
+                style={{
+                  color: 'hsl(var(--muted-foreground))',
+                }}
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div 
+              className="flex items-center gap-2 text-xs"
+              style={{
+                color: 'hsl(var(--muted-foreground))',
+              }}
+            >
               <span>{formatDate(message.created_at)}</span>
               <span>•</span>
               <span className="capitalize">{message.geo_precision}</span>
